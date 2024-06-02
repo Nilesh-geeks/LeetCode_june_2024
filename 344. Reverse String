@@ -1,0 +1,69 @@
+Problem ::  344. Reverse String
+
+Write a function that reverses a string. The input string is given as an array of characters s.
+
+You must do this by modifying the input array in-place with O(1) extra memory.
+Approach 1
+    1. Bit manipulation approach is simple 
+       prerequisite is a^a =0 and a^0 = a
+    2. For a = 4 ,  b = 6
+        Now 
+        1.  a = a^b // a = 4^6
+        2.  b = a^b // b = 4^6^6 => 4 as 6^6 = 0
+        3.  a = a^b // a = 4^6^4 => 6 as 4^4 = 0
+        4. a = 6  and b = 4
+    3. So a and b values are not swapped
+    
+Approach 2
+    1. use string's inbuilt function to reverse the string.
+       reverse( begin(s) , end(s));
+       reverse( from address , to address) // it reverse from to to.
+
+Appraoch 3
+    Run the for loop till half the size of the string
+    and swap the ith value with n-1-i th one.
+
+Complexity
+Time complexity:
+    O(n)
+Space complexity:
+    O(1)
+
+Code  1 :: 
+#pragma gcc optimize("03")
+auto init = [](){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+        int n = s.size();
+         for(int i=0;i<n/2;i++){
+                s[i] = s[i]^s[n-1-i];
+                s[n-1-i] = s[i]^s[n-1-i];
+                s[i] = s[i]^s[n-1-i];
+        }
+    }
+};
+
+Code 2 : 
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+      reverse(s.begin() , s.end());
+    }
+};
+
+
+Code 3 : 
+class Solution {
+public:
+    void reverseString(vector<char>& s) {
+       for(int i=0;i<s.size()/2;i++){
+                swap(s[i],s[s.size()-1-i]);
+        }
+    }
+};
