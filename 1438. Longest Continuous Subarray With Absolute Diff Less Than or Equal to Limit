@@ -1,0 +1,53 @@
+Problem :: 1438. Longest Continuous Subarray With Absolute Diff Less Than or Equal to Limit
+Approach
+   1. Use Sliding Window Technique
+   2. Initialize the i , j and till iterate nums[j] - nums[i]<=limit
+       and store the length of the subarray j-i+1
+   3. If nums[j] - nums[i] > limit Then find maxi and mini again 
+      from i to j 
+    4. return res
+Complexity
+Time complexity:
+     O(N)
+Space complexity:
+     O(1)
+Code
+#pragma gcc optimize("03")
+auto init = [](){
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    return 'c';
+}();
+class Solution {
+    void solve(int &mini , int &maxi , int i , int j , vector<int>&nums){
+        if(i==nums.size())return ;
+        while(i<=j){
+            mini = min(mini , nums[i]); // store the mini
+            maxi = max(maxi , nums[i]); // store the maxi
+            i++;
+        }
+    }
+public:
+    int longestSubarray(vector<int>& nums, int limit) {
+        int mini = INT_MAX;
+        int maxi = INT_MIN;
+        int i=0 , j=0;
+        int res = -1;
+        for( j=0 ; j<nums.size() ; j++){
+            mini = min(mini , nums[j]);
+            maxi = max(maxi , nums[j]);
+            if(maxi- mini<=limit){
+                res = max(res , j-i+1); // store the max length of the subarray
+            }
+            else{
+                i++;
+                maxi = INT_MIN; // reset the maxi 
+                mini = INT_MAX; // reset the mini
+                solve(mini , maxi , i , j, nums);
+                
+            }
+        }
+        return res;
+    }
+};
